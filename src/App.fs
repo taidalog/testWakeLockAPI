@@ -39,7 +39,7 @@ let releaseWakeLock wakeLock =
     emitJsStatement
         wakeLock
         """
-            wakeLock.release()
+            $0.release()
         """
 
 myButton.onclick <- fun _ ->
