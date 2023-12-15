@@ -39,8 +39,11 @@ let releaseWakeLock wakeLock =
     emitJsStatement
         wakeLock
         """
-            $0.release()
-            console.log("released wakeLock.")
+            if (typeof $0 !== "undefined" && $0 != null) {
+                $0.release().then(x => {
+                    console.log("released wakeLock.")
+                })
+            }
         """
 
 myButton.onclick <- fun _ ->
