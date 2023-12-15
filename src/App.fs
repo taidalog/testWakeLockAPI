@@ -40,6 +40,7 @@ let releaseWakeLock wakeLock =
         wakeLock
         """
             $0.release()
+            console.log("released wakeLock.")
         """
 
 myButton.onclick <- fun _ ->
