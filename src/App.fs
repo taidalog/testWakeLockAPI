@@ -30,12 +30,13 @@ let isWakeLockSupported =
         """
             "wakeLock" in navigator
         """
+let outputArea = document.getElementById "outputArea"
+outputArea.innerText <- sprintf "%b" isWakeLockSupported
 
 let myButton = document.querySelector(".my-button") :?> Browser.Types.HTMLButtonElement
 myButton.onclick <- fun _ ->
     let duration = 1000 * 60 * 2
 
-    let outputArea = document.getElementById "outputArea"
     outputArea.innerText <-
         if isWakeLockSupported then
             $"""
