@@ -28,7 +28,11 @@ let isWakeLockSupported =
     emitJsStatement
         ()
         """
-            "wakeLock" in navigator
+            if ("wakeLock" in navigator) {
+                return True
+            } else {
+                return False
+            }
         """
 let outputArea = document.getElementById "outputArea"
 outputArea.innerText <- sprintf "%b" isWakeLockSupported
