@@ -108,20 +108,6 @@ let mutable state: obj = null
 
 myButton.onclick <- fun _ ->
     myButton.innerText <- sprintf "You clicked on: %s" (System.DateTime.Now.ToString())
-    //let wakeLock = screenLock ()
-    //printfn "%s" (wakeLock.GetType().ToString())
-    //setTimeout (fun _ -> releaseWakeLock wakeLock) (1000 * 2)
-
-    //let wakeLock2 = navigator?wakeLock?request("screen")
-    //printfn "%s" (wakeLock2.GetType().ToString())
-    //printfn "%s" (wakeLock2?released)
-    //setTimeout (fun _ -> wakeLock2?release()) (1000 * 2) |> ignore
-    //setTimeout (fun _ -> releaseWakeLock wakeLock2) (1000 * 2)
-
-    // printfn "%s" (state.GetType().ToString())
-    // screenLock3 ()
-    // printfn "%s" (state.GetType().ToString())
-    // setTimeout (fun _ -> releaseWakeLock state) (1000 * 2)
 
     let wakeLock3 =
         promise {
@@ -129,11 +115,13 @@ myButton.onclick <- fun _ ->
             let! x = navigator?wakeLock?request("screen")
             return x
         }
-    let wakeLock3' = wakeLock3.``then``(fun x -> x)
-    printfn "%A" (wakeLock3'?released)
-    let f () =
-        wakeLock3.``then``(fun x -> 
-            printfn "releasing at %s" (System.DateTime.Now.ToString())
-            x?release()
-        ) |> ignore
-    setTimeout (fun _ -> f ()) (1000 * 60 * 5)
+    
+    printfn "after locking"
+
+    setTimeout
+        (fun _ ->
+            wakeLock3.``then``(fun x -> 
+                printfn "releasing at %s" (System.DateTime.Now.ToString())
+                x?release()
+            ) |> ignore)
+        (1000 * 60 * 2)
