@@ -2,7 +2,6 @@ module App
 
 open System
 open Browser.Dom
-open Browser.Types
 open Browser.Navigator
 open Fable.Core
 open Fable.Core.JsInterop
