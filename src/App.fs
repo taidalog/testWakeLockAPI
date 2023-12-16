@@ -33,7 +33,18 @@ let isWakeLockSupported =
 
 let myButton = document.querySelector(".my-button") :?> Browser.Types.HTMLButtonElement
 myButton.onclick <- fun _ ->
-    myButton.innerText <- sprintf "You clicked on: %s" (DateTime.Now.ToString())
+    let duration = 1000 * 60 * 2
+
+    let outputArea = document.getElementById "outputArea"
+    outputArea.innerText <-
+        if isWakeLockSupported then
+            $"""
+            You clicked on: %s{DateTime.Now.ToString()}
+            Locking the screen for %d{duration / 60 / 1000} minutes.
+            The lock will be released at %s{DateTime.Now.AddMilliseconds(duration).ToString()}
+            """
+        else
+            "WakeLock API is not supported on this environment."
 
     wakeLock <-
         if isWakeLockSupported then
@@ -51,4 +62,4 @@ myButton.onclick <- fun _ ->
             match wakeLock with
             | Some x -> release x
             | None -> printfn "doing nothing")
-        (1000 * 60 * 2)
+        duration
