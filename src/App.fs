@@ -29,9 +29,9 @@ let isWakeLockSupported =
         ()
         """
             if ("wakeLock" in navigator) {
-                return True
+                return true
             } else {
-                return False
+                return false
             }
         """
 let outputArea = document.getElementById "outputArea"
